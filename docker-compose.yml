@@ -2,8 +2,34 @@ version: '3'
 
 services:
   php:
+    container_name: php
     build: .
     volumes:
       - .:/app
     ports:
       - 8888:8000
+    depends_on:
+      - db
+
+  db:
+    container_name: PostgreSQL
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=Vlad
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=KitchenWonder
+
+  pgadmin:
+      container_name: pgadmin
+      image: dpage/pgadmin4
+      volumes:
+        - .:/app
+      environment:
+        PGADMIN_DEFAULT_EMAIL: vlad28102020@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: root
+      ports:
+        - 5050:80
