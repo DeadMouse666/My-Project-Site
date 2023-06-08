@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 
 services:
   php:
@@ -9,19 +9,16 @@ services:
     ports:
       - 8888:8000
     depends_on:
-      - db
+      - PostgreSQL
 
-  db:
-    container_name: PostgreSQL
-    build: .
-    volumes:
-      - .:/app
+  PostgreSQL:
+    container_name: db
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=Vlad
       - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=KitchenWonder
+      - POSTGRES_USER=Vlad
+    image: postgres:15.3-alpine
 
   pgadmin:
       container_name: pgadmin
